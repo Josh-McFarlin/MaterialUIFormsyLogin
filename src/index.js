@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 
+import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
@@ -14,11 +15,20 @@ import { capitalizeFirstLetter } from "./utils";
 import "./styles.css";
 
 const styles = theme => ({
+  container: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   infoPaper: {
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
-    padding: theme.spacing.unit
+    padding: theme.spacing.unit,
+    width: 500,
+    maxWidth: "80%"
   },
   button: {
     margin: theme.spacing.unit
@@ -65,21 +75,28 @@ class App extends React.Component {
 
     return (
       <React.Fragment>
-        {
-          user === undefined ? (
-            <LoginForm credentials={this.credentials} setUser={this.setUser} />
-          ) : (
-              <Paper className={classes.infoPaper}>
+        <CssBaseline />
+        <div className={classes.container}>
+          <Paper className={classes.infoPaper}>
+            {user === undefined ? (
+              <LoginForm
+                credentials={this.credentials}
+                setUser={this.setUser}
+              />
+            ) : (
+              <React.Fragment>
                 <List>
-                  {
-                    Object.keys(user).map((title, index) => {
-                      return (
-                        <ListItem>
-                          <ListItemText primary={capitalizeFirstLetter(title)} secondary={user[title]} key={index} />
-                        </ListItem>
-                      );
-                    })
-                  }
+                  {Object.keys(user).map((title, index) => {
+                    return (
+                      <ListItem>
+                        <ListItemText
+                          primary={capitalizeFirstLetter(title)}
+                          secondary={user[title]}
+                          key={index}
+                        />
+                      </ListItem>
+                    );
+                  })}
                 </List>
 
                 <Button
@@ -90,18 +107,19 @@ class App extends React.Component {
                 >
                   Logout
                 </Button>
-              </Paper>
-            )
-        }
+              </React.Fragment>
+            )}
+          </Paper>
+        </div>
       </React.Fragment>
     );
   }
 }
-App = withStyles(styles)(App);
 
 App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+let StyledApp = withStyles(styles)(App);
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<StyledApp />, rootElement);

@@ -1,16 +1,9 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { withFormsy } from "formsy-react";
-import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 import { capitalizeFirstLetter } from "./utils";
-
-const styles = theme => ({
-  textField: {
-    margin: theme.spacing.unit
-  }
-});
 
 class FormsyTextField extends React.Component {
   constructor(props) {
@@ -27,7 +20,7 @@ class FormsyTextField extends React.Component {
   }
 
   render() {
-    let { classes, name, label, getErrorMessage, getValue, type } = this.props;
+    let { name, label, getErrorMessage, getValue, type } = this.props;
     let text = capitalizeFirstLetter(label !== undefined ? label : name);
 
     // An error message is returned only if the component is invalid
@@ -35,7 +28,6 @@ class FormsyTextField extends React.Component {
 
     return (
       <TextField
-        className={classes.textField}
         label={text}
         value={getValue() || ""}
         onChange={this.changeValue}
@@ -48,10 +40,8 @@ class FormsyTextField extends React.Component {
     );
   }
 }
-FormsyTextField = withStyles(styles)(FormsyTextField);
 
 FormsyTextField.propTypes = {
-  classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   getErrorMessage: PropTypes.func.isRequired,
