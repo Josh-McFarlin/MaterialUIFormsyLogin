@@ -24,10 +24,13 @@ const styles = theme => ({
     color: "white"
   },
   container: {
+    width: "100%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
     alignItems: "center",
+    justifyContent: "space-between",
     padding: theme.spacing.unit
   },
   button: {
@@ -129,8 +132,8 @@ class LoginForm extends React.Component {
   async submit(model) {
     if (this.state.registerForm) {
       this.simulateRegister(model).then(
-        async (result) => {
-          let { passwordConf, ...rest} = model;
+        async result => {
+          let { passwordConf, ...rest } = model;
           this.props.credentials.push(rest);
           this.setState({
             message: result,
@@ -170,7 +173,13 @@ class LoginForm extends React.Component {
 
   render() {
     let { classes } = this.props;
-    let { registerForm, canSubmit, showLoader, message, messageColor } = this.state;
+    let {
+      registerForm,
+      canSubmit,
+      showLoader,
+      message,
+      messageColor
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -237,7 +246,7 @@ class LoginForm extends React.Component {
           )}
 
           <Grow in={showLoader} timeout={1000}>
-            <div class="loader" />
+            <div className="loader" />
           </Grow>
 
           <Button
@@ -266,6 +275,7 @@ class LoginForm extends React.Component {
     );
   }
 }
+
 export default withStyles(styles)(LoginForm);
 
 LoginForm.propTypes = {

@@ -1,9 +1,9 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { withFormsy, addValidationRule } from "formsy-react";
-import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
+import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -15,7 +15,7 @@ import RemoveIcon from "@material-ui/icons/RemoveCircle";
 
 import { capitalizeFirstLetter } from "./utils";
 
-addValidationRule("isValidPassword", function (values, value) {
+addValidationRule("isValidPassword", function(values, value) {
   return (
     value != null &&
     value.length >= 5 &&
@@ -26,9 +26,6 @@ addValidationRule("isValidPassword", function (values, value) {
 });
 
 const styles = theme => ({
-  textField: {
-    margin: theme.spacing.unit
-  },
   fullWidth: {
     width: "100%"
   }
@@ -112,7 +109,14 @@ class FormsyPasswordField extends React.Component {
 
   render() {
     let { showHint, length, lowercase, uppercase, numbers } = this.state;
-    let { classes, name, getErrorMessage, getValue, type, showRules } = this.props;
+    let {
+      classes,
+      name,
+      getErrorMessage,
+      getValue,
+      type,
+      showRules
+    } = this.props;
     let label = capitalizeFirstLetter(name);
 
     // An error message is returned only if the component is invalid
@@ -144,7 +148,6 @@ class FormsyPasswordField extends React.Component {
         )}
 
         <TextField
-          className={classes.textField}
           label={label}
           value={getValue() || ""}
           onChange={this.changeValue}
@@ -161,8 +164,6 @@ class FormsyPasswordField extends React.Component {
   }
 }
 
-FormsyPasswordField = withStyles(styles)(FormsyPasswordField);
-
 FormsyPasswordField.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
@@ -176,4 +177,4 @@ FormsyPasswordField.defaultProps = {
   showRules: false
 };
 
-export default withFormsy(FormsyPasswordField);
+export default withFormsy(withStyles(styles)(FormsyPasswordField));
