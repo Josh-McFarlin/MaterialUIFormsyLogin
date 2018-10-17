@@ -1,2 +1,0 @@
-# MaterialUIFormsyLogin
-Created with CodeSandbox
