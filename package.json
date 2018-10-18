@@ -1,8 +1,14 @@
 {
-  "name": "new",
+  "name": "materialuiformsylogin",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "An example login flow for React utilizing Material-UI and Formsy.",
+  "keywords": [
+    "formsy",
+    "react",
+    "material-ui",
+    "materialui",
+    "mui"
+  ],
   "main": "src/index.js",
   "dependencies": {
     "@material-ui/core": "3.2.2",

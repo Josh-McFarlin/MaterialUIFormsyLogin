@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { withFormsy } from "formsy-react";
 import PropTypes from "prop-types";
 
-import { capitalizeFirstLetter } from "./utils";
+import { capitalizeFirstLetter } from "../utils";
 
 class FormsyTextField extends React.Component {
   constructor(props) {

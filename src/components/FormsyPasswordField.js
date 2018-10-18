@@ -13,7 +13,7 @@ import Collapse from "@material-ui/core/Collapse";
 import CheckIcon from "@material-ui/icons/CheckCircleOutline";
 import RemoveIcon from "@material-ui/icons/RemoveCircle";
 
-import { capitalizeFirstLetter } from "./utils";
+import { capitalizeFirstLetter } from "../utils";
 
 addValidationRule("isValidPassword", function(values, value) {
   return (

@@ -10,7 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 
-import LoginForm from "./LoginForm";
+import LoginForm from "./components/LoginForm";
 import { capitalizeFirstLetter } from "./utils";
 import "./styles.css";
 

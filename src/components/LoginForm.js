@@ -12,8 +12,7 @@ import Collapse from "@material-ui/core/Collapse";
 import FormsyTextField from "./FormsyTextField";
 import FormsyPasswordField from "./FormsyPasswordField";
 
-import "./styles.css";
-import { sleep } from "./utils";
+import { sleep, simulateRegister, simulateLogin } from "../utils";
 
 const styles = theme => ({
   errorPaper: {
@@ -56,50 +55,12 @@ class LoginForm extends React.Component {
 
     this.formRef = React.createRef();
 
-    this.simulateLogin = this.simulateLogin.bind(this);
     this.resetErrors = this.resetErrors.bind(this);
     this.toggleFormType = this.toggleFormType.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.disableButton = this.disableButton.bind(this);
     this.enableButton = this.enableButton.bind(this);
     this.submit = this.submit.bind(this);
-  }
-
-  async simulateLogin(model) {
-    let { email, password } = model;
-    this.setState({ showLoader: true, canSubmit: false });
-    await sleep(1000);
-    this.setState({ showLoader: false });
-
-    return await new Promise((resolve, reject) => {
-      for (let obj of this.props.credentials) {
-        if (obj.email === email) {
-          if (obj.password === password) {
-            return resolve(obj);
-          } else {
-            return reject("Incorrect password!");
-          }
-        }
-      }
-
-      return reject("Email not found!");
-    });
-  }
-
-  async simulateRegister(model) {
-    this.setState({ showLoader: true, canSubmit: false });
-    await sleep(1000);
-    this.setState({ showLoader: false });
-
-    return await new Promise((resolve, reject) => {
-      for (let obj of this.props.credentials) {
-        if (obj.email === model.email) {
-          return reject("The email is already registered!");
-        }
-      }
-
-      return resolve("Registration was successful!");
-    });
   }
 
   resetErrors() {
@@ -130,11 +91,22 @@ class LoginForm extends React.Component {
   }
 
   async submit(model) {
-    if (this.state.registerForm) {
-      this.simulateRegister(model).then(
+    let { credentials, setUser } = this.props;
+    let { registerForm } = this.state;
+
+    this.setState({
+      showLoader: true,
+      canSubmit: false
+    });
+
+    await sleep(1500);
+
+    if (registerForm) {
+      await simulateRegister(credentials, model).then(
         async result => {
           let { passwordConf, ...rest } = model;
-          this.props.credentials.push(rest);
+          credentials.push(rest);
+
           this.setState({
             message: result,
             messageColor: "green"
@@ -148,27 +120,26 @@ class LoginForm extends React.Component {
             message: error,
             messageColor: "red"
           });
-        },
-        () => {
-          this.setState({ canSubmit: true });
         }
       );
     } else {
-      this.simulateLogin(model).then(
+      await simulateLogin(credentials, model).then(
         result => {
-          this.props.setUser(result);
+          setUser(result);
         },
         error => {
           this.setState({
             message: error,
             messageColor: "red"
           });
-        },
-        () => {
-          this.setState({ canSubmit: true });
         }
       );
     }
+
+    this.setState({
+      canSubmit: true,
+      showLoader: false
+    });
   }
 
   render() {
@@ -276,10 +247,10 @@ class LoginForm extends React.Component {
   }
 }
 
-export default withStyles(styles)(LoginForm);
-
 LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,
   credentials: PropTypes.array.isRequired,
   setUser: PropTypes.func.isRequired
 };
+
+export default withStyles(styles)(LoginForm);
