@@ -5,9 +5,6 @@ import Formsy from "formsy-react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Collapse from "@material-ui/core/Collapse";
 
 import FormsyTextField from "./FormsyTextField";
 import FormsyPasswordField from "./FormsyPasswordField";
@@ -49,8 +46,7 @@ class LoginForm extends React.Component {
       registerForm: false,
       canSubmit: false,
       showLoader: false,
-      message: undefined,
-      messageColor: "red"
+      validationErrors: {}
     };
 
     this.formRef = React.createRef();
@@ -65,7 +61,7 @@ class LoginForm extends React.Component {
 
   resetErrors() {
     this.setState({
-      message: undefined
+      validationErrors: {}
     });
   }
 
@@ -78,7 +74,8 @@ class LoginForm extends React.Component {
     this.formRef.current.reset();
 
     this.setState({
-      registerForm: false
+      registerForm: false,
+      validationErrors: {}
     });
   }
 
@@ -105,18 +102,12 @@ class LoginForm extends React.Component {
           let { passwordConf, ...rest } = model;
           credentials.push(rest);
 
-          this.setState({
-            message: result,
-            messageColor: "green"
-          });
-
           await sleep(2000);
           this.resetForm();
         },
         error => {
           this.setState({
-            message: error,
-            messageColor: "red"
+            validationErrors: error
           });
         }
       );
@@ -127,8 +118,7 @@ class LoginForm extends React.Component {
         },
         error => {
           this.setState({
-            message: error,
-            messageColor: "red"
+            validationErrors: error
           });
         }
       );
@@ -146,34 +136,17 @@ class LoginForm extends React.Component {
       registerForm,
       canSubmit,
       showLoader,
-      message,
-      messageColor
+      validationErrors
     } = this.state;
 
     return (
-      <React.Fragment>
-        <Collapse in={message !== undefined}>
-          <Paper className={classes.errorPaper}>
-            <Typography
-              className={classes.errorText}
-              variant="h5"
-              align="center"
-              gutterBottom
-              style={{
-                backgroundColor: messageColor
-              }}
-            >
-              {message}
-            </Typography>
-          </Paper>
-        </Collapse>
-
         <Formsy
           ref={this.formRef}
           onValidSubmit={this.submit}
           onValid={this.enableButton}
           onInvalid={this.disableButton}
           onChange={this.resetErrors}
+          validationErrors={validationErrors}
           className={classes.container}
         >
           {registerForm && (
@@ -242,7 +215,6 @@ class LoginForm extends React.Component {
               : "Don't have an account? Register"}
           </Typography>
         </Formsy>
-      </React.Fragment>
     );
   }
 }

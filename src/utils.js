@@ -12,7 +12,7 @@ export async function simulateRegister(credentials, model) {
   return await new Promise((resolve, reject) => {
     for (let user of credentials) {
       if (user.email === model.email) {
-        return reject("The email is already registered!");
+        return reject({email: "The email is already registered!"});
       }
     }
 
@@ -29,11 +29,11 @@ export async function simulateLogin(credentials, model) {
         if (user.password === model.password) {
           return resolve(user);
         } else {
-          return reject("Incorrect password!");
+          return reject({password: "Incorrect password!"});
         }
       }
     }
 
-    return reject("Email not found!");
+    return reject({email: "Email not found!"});
   });
 }
