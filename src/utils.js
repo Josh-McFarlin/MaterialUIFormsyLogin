@@ -7,6 +7,8 @@ export function sleep(ms) {
 }
 
 export async function simulateRegister(credentials, model) {
+  await sleep(1500);
+
   return await new Promise((resolve, reject) => {
     for (let user of credentials) {
       if (user.email === model.email) {
@@ -19,6 +21,8 @@ export async function simulateRegister(credentials, model) {
 }
 
 export async function simulateLogin(credentials, model) {
+  await sleep(1500);
+  
   return await new Promise((resolve, reject) => {
     for (let user of credentials) {
       if (user.email === model.email) {

@@ -11,13 +11,18 @@ body,
   text-align: center;
 }
 
+.loader-holder {
+  width: 40px;
+  height: 40px;
+  animation: grow 1s, opacity 1.5s;
+}
+
 .loader {
-  border: 12px solid #f3f3f3; /* Light grey */
-  border-top: 12px solid #3498db; /* Blue */
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  margin: 10px;
+  width: 40px;
+  height: 40px;
   animation: spin 2s linear infinite;
 }
 
@@ -27,5 +32,23 @@ body,
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
   }
 }

@@ -99,8 +99,6 @@ class LoginForm extends React.Component {
       canSubmit: false
     });
 
-    await sleep(1500);
-
     if (registerForm) {
       await simulateRegister(credentials, model).then(
         async result => {
@@ -216,9 +214,11 @@ class LoginForm extends React.Component {
             />
           )}
 
-          <Grow in={showLoader} timeout={1000}>
-            <div className="loader" />
-          </Grow>
+          {showLoader &&
+            <div className="loader-holder">
+              <div className="loader" />
+            </div>
+          }
 
           <Button
             className={classes.button}

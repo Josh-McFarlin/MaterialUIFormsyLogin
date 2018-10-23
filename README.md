@@ -6,6 +6,4 @@ The login process is just an example, using promises and local variables to simu
 
 The example demonstrates working user registration and login.
 
-[You can preview a live example of this code on codesandbox.](https://kwrq0r8m47.codesandbox.io/)
-
-[![Edit MaterialUIFormsyLogin](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/kwrq0r8m47)
+[![Edit MaterialUIFormsyLogin](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/Josh-McFarlin/MaterialUIFormsyLogin)
